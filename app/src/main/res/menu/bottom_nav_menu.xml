@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_browse"
+        android:icon="@drawable/explore_24px"
+        android:title="Browse"/>
+
+    <item
+        android:id="@+id/navigation_saved"
+        android:icon="@drawable/collections_bookmark_24px"
+        android:title="Saved"/>
+
+    <item
+        android:id="@+id/navigation_account"
+        android:icon="@drawable/person_24px"
+        android:title="Account"/>
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/settings_24px"
+        android:title="Settings"/>
+
+</menu>
