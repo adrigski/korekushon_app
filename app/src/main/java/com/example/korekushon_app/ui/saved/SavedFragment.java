@@ -5,29 +5,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.korekushon_app.databinding.FragmentSavedBinding;
 
 public class SavedFragment extends Fragment {
 
-private FragmentSavedBinding binding;
+    private FragmentSavedBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+                             ViewGroup container, Bundle savedInstanceState) {
+        SavedViewModel dashboardViewModel =
+                new ViewModelProvider(this).get(SavedViewModel.class);
 
-    binding = FragmentSavedBinding.inflate(inflater, container, false);
-    View root = binding.getRoot();
+        binding = FragmentSavedBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
+        final TextView textView = binding.textSaved;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
-@Override
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
