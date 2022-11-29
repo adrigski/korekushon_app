@@ -4,10 +4,10 @@ public class ItemObject {
 
     String console_name, product_id, product_name;
 
-    public ItemObject(String product_name) {
+    public ItemObject(String console_name, String product_name) {
+        this.console_name = console_name;
         this.product_name = product_name;
     }
-
 
     public String getConsole_name() {
         return console_name;

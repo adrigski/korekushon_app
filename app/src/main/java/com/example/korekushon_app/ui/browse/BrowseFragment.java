@@ -1,20 +1,17 @@
 package com.example.korekushon_app.ui.browse;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.example.korekushon_app.R;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.os.AsyncTask;
 import android.widget.ListView;
-
+import android.widget.SearchView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,23 +25,26 @@ import java.util.List;
 
 public class BrowseFragment extends Fragment {
 
-    private ListView browse;
+    public ListView browse;
+    public SearchView search;
     ArrayList<ItemObject> list_data;
-
+    public String searchTerm = "xenosaga"; // Search keyword for API
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_browse, container, false);
         browse = (ListView) rootView.findViewById(R.id.listView1);
+        search = (SearchView) rootView.findViewById(R.id.searchBar);
         return rootView;
-
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getJSON("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&id=36322");
+        // Calling API to retrieve JSON format
+        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", searchTerm));
+
     }
 
     private void loadIntoListView(String json) throws JSONException {
@@ -67,20 +67,12 @@ public class BrowseFragment extends Fragment {
                 String productID = jsonChildNode.getString("id");
                 String productName = jsonChildNode.getString("product-name");
 
-                jsonObject.add(new ItemObject(productName));
-
-                String test = (new ItemObject(productName)).toString();
+                jsonObject.add(new ItemObject(consoleName, productName));
 
 
-
-                Log.i("Data",  consoleName);
-                Log.i("Data",  productID);
-                Log.i("Data",  productName);
-            Log.i("Data",  test);
-
-
-            ArrayAdapter<ItemObject> mArrayAdapter = new ArrayAdapter<ItemObject>(getActivity(), android.R.layout.simple_list_item_1, jsonObject);
-            browse.setAdapter(mArrayAdapter);
+            List<ItemObject> parsedObject = jsonObject;
+            CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);
+            browse.setAdapter(jsonCustomAdapter);
 
         }
     }
@@ -97,12 +89,12 @@ public class BrowseFragment extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+
                 try {
                     loadIntoListView(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
             @Override
             protected String doInBackground(Void... voids) {
@@ -129,10 +121,6 @@ public class BrowseFragment extends Fragment {
 
         GetJSON getJSON = new GetJSON();
         getJSON.execute();
-
-
-
-
 
     } //end AsyncDataClass class
 

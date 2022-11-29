@@ -1,5 +1,4 @@
 package com.example.korekushon_app.ui.browse;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,6 @@ public class CustomAdapter extends BaseAdapter {
         return position;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView console_name = null;
@@ -51,14 +49,9 @@ public class CustomAdapter extends BaseAdapter {
                     false);
         }
         console_name = convertView.findViewById(R.id.console_name);
-        product_id = convertView.findViewById(R.id.product_id);
         product_name = convertView.findViewById(R.id.product_name);
-        console_name.setText("Song Title: " +
-                listStorage.get(position).getConsole_name());
-        product_id.setText("Song Year: " +
-                listStorage.get(position).getProduct_id());
-        product_name.setText("Song Artist: " +
-                listStorage.get(position).getProduct_name());
+        console_name.setText(listStorage.get(position).getConsole_name());
+        product_name.setText(listStorage.get(position).getProduct_name());
 
         return convertView;
     }
