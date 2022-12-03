@@ -43,6 +43,21 @@ public class BrowseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String textQuery) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String textQuery) {
+                searchTerm = textQuery;
+                return false;
+            }
+        });
+
         // Calling API to retrieve JSON format
         getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", searchTerm));
 
