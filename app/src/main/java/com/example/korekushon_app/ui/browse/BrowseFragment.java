@@ -43,6 +43,8 @@ public class BrowseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Calling API to retrieve JSON format
+        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", searchTerm));
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -54,12 +56,11 @@ public class BrowseFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String textQuery) {
                 searchTerm = textQuery;
+                // Calling API to retrieve JSON format
+                getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", searchTerm));
                 return false;
             }
         });
-
-        // Calling API to retrieve JSON format
-        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", searchTerm));
 
     }
 
