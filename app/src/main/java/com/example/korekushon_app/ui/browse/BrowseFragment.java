@@ -1,17 +1,24 @@
 package com.example.korekushon_app.ui.browse;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.korekushon_app.R;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import android.os.AsyncTask;
 import android.widget.ListView;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,65 +33,64 @@ import java.util.List;
 public class BrowseFragment extends Fragment {
 
     public ListView browse;
-    public SearchView search;
     ArrayList<ItemObject> list_data;
-    public String searchTerm = "xenosaga"; // Search keyword for API
+    Toolbar toolbar;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_browse, container, false);
+
+        toolbar = rootView.findViewById(R.id.toolbar);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
         browse = (ListView) rootView.findViewById(R.id.listView1);
-        search = (SearchView) rootView.findViewById(R.id.searchBar);
+
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.clear();
+                menuInflater.inflate(R.menu.toolbar, menu);
+                SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+                SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String textQuery) {
+                        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", textQuery));
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String textQuery) {
+                        return false;
+                    }
+                });
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        });
         return rootView;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String textQuery) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String textQuery) {
-                searchTerm = textQuery;
-                return false;
-            }
-        });
-
         // Calling API to retrieve JSON format
-        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", searchTerm));
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String textQuery) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String textQuery) {
-                searchTerm = textQuery;
-                // Calling API to retrieve JSON format
-                getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", searchTerm));
-                return false;
-            }
-        });
-
+        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", "nintendo switch"));
     }
 
     private void loadIntoListView(String json) throws JSONException {
 
         List<ItemObject> jsonObject = new ArrayList<ItemObject>();
-        JSONObject resultObject = null;
-        JSONArray jsonArray = null;
-        ItemObject newItemObject = null; //interior object holder
+        JSONObject resultObject;
+        JSONArray jsonArray;
 
             resultObject = new JSONObject(json);
             System.out.println("Preparsed JSON object " +
