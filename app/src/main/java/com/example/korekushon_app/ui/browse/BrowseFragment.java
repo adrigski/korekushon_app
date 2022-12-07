@@ -2,7 +2,9 @@ package com.example.korekushon_app.ui.browse;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +19,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import android.os.AsyncTask;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import androidx.appcompat.widget.SearchView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,18 +40,31 @@ public class BrowseFragment extends Fragment {
     ArrayList<ItemObject> list_data;
     Toolbar toolbar;
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_browse, container, false);
-
+        browse = (ListView) rootView.findViewById(R.id.listView1);
         toolbar = rootView.findViewById(R.id.toolbar);
-
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
-        browse = (ListView) rootView.findViewById(R.id.listView1);
 
+        // Select object from listview
+        browse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                TextView listviewTitle = (TextView) view.findViewById(R.id.product_name);
+                TextView listviewSecondary = (TextView) view.findViewById(R.id.console_name);
+
+                Intent intent=new Intent(getActivity(), ProductView.class);
+                intent.putExtra("listviewTitle", listviewTitle.getText().toString());
+                intent.putExtra("listviewSecondary", listviewSecondary.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        // Top Bar Search
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -60,7 +77,6 @@ public class BrowseFragment extends Fragment {
                     @Override
                     public boolean onQueryTextSubmit(String textQuery) {
                         getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", textQuery));
-
                         return false;
                     }
 
@@ -70,7 +86,6 @@ public class BrowseFragment extends Fragment {
                     }
                 });
             }
-
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 return false;
@@ -78,6 +93,7 @@ public class BrowseFragment extends Fragment {
         });
         return rootView;
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -106,7 +122,6 @@ public class BrowseFragment extends Fragment {
                 String productName = jsonChildNode.getString("product-name");
 
                 jsonObject.add(new ItemObject(consoleName, productName));
-
 
             List<ItemObject> parsedObject = jsonObject;
             CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);

@@ -7,12 +7,25 @@
     android:layout_height="match_parent"
     tools:context="ui.browse.BrowseFragment" >
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/toolbar"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            app:title="Browse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/toolbar"
+            tools:ignore="MissingConstraints" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
 
     <ListView
         android:id="@+id/listView1"
@@ -21,13 +34,5 @@
         android:layout_marginTop="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--    <SearchView-->
-<!--        android:id="@+id/searchBar"-->
-<!--        android:layout_width="409dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        tools:layout_editor_absoluteX="1dp"-->
-<!--        tools:layout_editor_absoluteY="1dp"-->
-<!--        tools:ignore="MissingConstraints" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

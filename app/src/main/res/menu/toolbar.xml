@@ -7,6 +7,7 @@
         android:title="Search"
         android:icon="@drawable/search_24px"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:contentDescription="@string/title_browse"
         app:showAsAction="ifRoom|collapseActionView"
         />
 
