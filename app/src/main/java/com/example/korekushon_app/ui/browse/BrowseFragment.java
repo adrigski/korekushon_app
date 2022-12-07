@@ -77,6 +77,8 @@ public class BrowseFragment extends Fragment {
                     @Override
                     public boolean onQueryTextSubmit(String textQuery) {
                         getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", textQuery));
+                        getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", textQuery));
+
                         return false;
                     }
 
@@ -100,6 +102,8 @@ public class BrowseFragment extends Fragment {
 
         // Calling API to retrieve JSON format
         getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", "nintendo switch"));
+        getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", "albedo"));
+
     }
 
     private void loadIntoListView(String json) throws JSONException {
