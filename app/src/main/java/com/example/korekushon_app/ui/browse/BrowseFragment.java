@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.korekushon_app.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +20,13 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import android.os.AsyncTask;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.SearchView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -39,6 +45,7 @@ public class BrowseFragment extends Fragment {
     public ListView browse;
     ArrayList<ItemObject> list_data;
     Toolbar toolbar;
+    Boolean switchState;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +55,20 @@ public class BrowseFragment extends Fragment {
         toolbar = rootView.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
+
+        View rootView2 = inflater.inflate(R.layout.switch_item, container, false);
+        Switch simpleSwitch = (Switch) rootView2.findViewById(R.id.simpleSwitch);
+
+        switchState = simpleSwitch.isChecked();
+        if(switchState == false) {
+            Toast.makeText(getContext(), "False", Toast.LENGTH_SHORT).show();
+        }
+        else if(switchState == true) {
+            Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
+        }
+
+
+
 
         // Select object from listview
         browse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,7 +84,6 @@ public class BrowseFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         // Top Bar Search
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
@@ -73,11 +93,20 @@ public class BrowseFragment extends Fragment {
                 SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
                 SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
                 searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
                     @Override
                     public boolean onQueryTextSubmit(String textQuery) {
-                        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", textQuery));
-                        getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", textQuery));
+                        if(switchState == false) {
+                            Toast.makeText(getContext(), "False", Toast.LENGTH_SHORT).show();
+                            getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", textQuery));
+                        }
+                        else if(switchState == true)    {
+                            Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
+                            getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", textQuery));
+                        }
 
                         return false;
                     }
@@ -87,6 +116,9 @@ public class BrowseFragment extends Fragment {
                         return false;
                     }
                 });
+
+
+
             }
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
@@ -94,11 +126,13 @@ public class BrowseFragment extends Fragment {
             }
         });
         return rootView;
+
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         // Calling API to retrieve JSON format
         getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", "nintendo switch"));
@@ -112,13 +146,19 @@ public class BrowseFragment extends Fragment {
         JSONObject resultObject;
         JSONArray jsonArray;
 
+        String type = "";
+
+
             resultObject = new JSONObject(json);
             System.out.println("Preparsed JSON object " +
                     resultObject.toString());
             // set up json Array to be parsed
             jsonArray = resultObject.optJSONArray("products");
-        for(int i = 0; i < jsonArray.length(); i++){
-            JSONObject jsonChildNode = null;
+
+        System.out.println("Makima is listening" + jsonArray);
+        if (switchState == false ) {
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
                 //get all data from stream
                 String consoleName = jsonChildNode.getString("console-name");
@@ -127,11 +167,30 @@ public class BrowseFragment extends Fragment {
 
                 jsonObject.add(new ItemObject(consoleName, productName));
 
-            List<ItemObject> parsedObject = jsonObject;
-            CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);
-            browse.setAdapter(jsonCustomAdapter);
+                List<ItemObject> parsedObject = jsonObject;
+                CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);
+                browse.setAdapter(jsonCustomAdapter);
+            }
 
         }
+        else if (switchState == true) {
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonChildNode = null;
+                jsonChildNode = jsonArray.getJSONObject(i);
+                //get all data from stream
+                String consoleName = jsonChildNode.getString("url");
+                String productID = jsonChildNode.getString("_id");
+                String productName = jsonChildNode.getString("title");
+
+                jsonObject.add(new ItemObject(consoleName, productName));
+
+                List<ItemObject> parsedObject = jsonObject;
+                CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);
+                browse.setAdapter(jsonCustomAdapter);
+            }
+            }
+
+
     }
 
     private void getJSON(final String urlWebService) {
