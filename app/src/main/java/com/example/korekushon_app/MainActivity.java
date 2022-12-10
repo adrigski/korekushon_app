@@ -1,5 +1,6 @@
 package com.example.korekushon_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,14 +19,21 @@ import com.example.korekushon_app.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    DatabaseHelper myDb;
+
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        myDb = new DatabaseHelper(this);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Intent i = getIntent();
+        String username_cred = i.getStringExtra("listviewTitle");
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

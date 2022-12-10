@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.saved.SavedFragment" >
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            app:title="Saved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/back_menu"
+            tools:ignore="MissingConstraints" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:id="@+id/text_saved"
         android:layout_width="match_parent"

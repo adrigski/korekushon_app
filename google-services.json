@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "44757316974",
+    "project_id": "korekushon-app",
+    "storage_bucket": "korekushon-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44757316974:android:fa821e5aac03c28e5c7d7f",
+        "android_client_info": {
+          "package_name": "com.example.korekushon_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44757316974-05oda7qsc08aqresqjs2esqn0ssdsmfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC143A04Bkqy3vRyYko_pCXSbJRluyBbh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44757316974-05oda7qsc08aqresqjs2esqn0ssdsmfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
