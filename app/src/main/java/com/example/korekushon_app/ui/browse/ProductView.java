@@ -1,10 +1,11 @@
 package com.example.korekushon_app.ui.browse;
 
-import static android.content.Intent.getIntent;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,9 +40,6 @@ public class ProductView extends AppCompatActivity {
         String listviewTitle = i.getStringExtra("listviewTitle");
         String listviewSecondary = i.getStringExtra("listviewSecondary");
 
-        System.out.println("Makima Is Listening" + productName + "" + consoleName + webView);
-        System.out.println("Makima Is Listening" + listviewTitle + "" + listviewSecondary);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(listviewTitle);
 
@@ -66,8 +64,15 @@ public class ProductView extends AppCompatActivity {
 //        consoleName.setText(console_name);
 
         // Load webpage inside webview
-        webView.loadUrl(String.format("https://www.pricecharting.com/game/%s/%s",
-                listviewSecondary.toLowerCase().replace(" ", "-"),
-                listviewTitle.toLowerCase().replace(" ", "-").replace(".", "")));
+        if(listviewSecondary.contains("shop"))  {
+            webView.loadUrl(String.format("https://otakumode.com" +
+                    listviewSecondary));
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        else    {
+            webView.loadUrl(String.format("https://www.pricecharting.com/game/%s/%s",
+                    listviewSecondary.toLowerCase().replace(" ", "-"),
+                    listviewTitle.toLowerCase().replace(" ", "-").replace(".", "")));        }
     }
 }
