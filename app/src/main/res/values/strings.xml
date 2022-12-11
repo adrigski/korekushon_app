@@ -4,4 +4,15 @@
     <string name="title_saved">Saved</string>
     <string name="title_account">Account</string>
     <string name="title_settings">Settings</string>
+
+    <string-array name="light_theme">
+        <item>Light Mode Auto</item>
+        <item>Light Mode On</item>
+        <item>Light Mode Off</item>
+    </string-array>
+    <string-array name="light_theme_value">
+        <item>Dark Mode Auto</item>
+        <item>Dark Mode On</item>
+        <item>Dark Mode Off</item>
+    </string-array>
 </resources>

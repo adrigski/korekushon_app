@@ -3,6 +3,7 @@ package com.example.korekushon_app.ui.account;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.korekushon_app.DatabaseHelper;
 import com.example.korekushon_app.R;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class AccountSetup extends AppCompatActivity {
 
@@ -44,6 +51,9 @@ public class AccountSetup extends AppCompatActivity {
 
                 Cursor res = db.grabUser(usernameInput.getText().toString());
 
+                // Generate hash for password
+                String password_hash = db.md5(passwordInput.getText().toString());
+
                 StringBuffer buffer = new StringBuffer();
                 while (res.moveToNext()) {
                     buffer.append(res.getString(1));
@@ -51,7 +61,8 @@ public class AccountSetup extends AppCompatActivity {
 
                 if (!buffer.toString().equals(usernameInput.getText().toString()) && !usernameInput.getText().toString().matches("")) {
                     Log.i("Login", "Account does not exist, creating...");
-                    boolean isInserted = db.insertData(usernameInput.getText().toString(),emailInput.getText().toString(),passwordInput.getText().toString());
+                    Log.i("Login", password_hash);
+                    boolean isInserted = db.insertData(usernameInput.getText().toString(),emailInput.getText().toString(),password_hash);
 
                     if (isInserted == true) {
                         Toast.makeText(AccountSetup.this, "Account Created!", Toast.LENGTH_LONG).show();
@@ -68,4 +79,6 @@ public class AccountSetup extends AppCompatActivity {
         }
         );
     }
+
+
 }

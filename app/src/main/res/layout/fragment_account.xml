@@ -7,13 +7,13 @@
     tools:context="ui.account.AccountFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/account_toolbar_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/account_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/account_menu"
@@ -26,12 +26,14 @@
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.372">
+        app:layout_constraintTop_toBottomOf="@+id/usernameOutput"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,7 +68,7 @@
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -83,18 +85,17 @@
             <!-- Title, secondary and supporting text -->
 
             <ImageView
-                android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/person_24px"
+                android:src="@drawable/lock_24px"
                 tools:layout_editor_absoluteX="136dp"
                 tools:layout_editor_absoluteY="148dp" />
 
             <TextView
-                android:id="@+id/username_textview"
+                android:id="@+id/password_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
+                android:text="*******"
                 android:textAppearance="?attr/textAppearanceTitleMedium" />
 
         </LinearLayout>
@@ -102,17 +103,46 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/button_click"
-        android:layout_width="wrap_content"
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card3"
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintTop_toBottomOf="@+id/card"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Title, secondary and supporting text -->
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/collections_bookmark_24px"
+                tools:layout_editor_absoluteX="136dp"
+                tools:layout_editor_absoluteY="148dp" />
+
+            <TextView
+                android:id="@+id/count_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saved Collection"
+                android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 
     <ImageView
         android:id="@+id/imageView3"
@@ -123,8 +153,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.068" />
+        app:layout_constraintTop_toBottomOf="@+id/account_toolbar_top"
+        app:layout_constraintVertical_bias="0.045" />
 
     <TextView
         android:id="@+id/usernameOutput"
@@ -136,7 +166,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/InputEmail"
+        android:id="@+id/InputPass"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="324dp"
@@ -41,7 +41,7 @@
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_input"
+            android:id="@+id/pass_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -81,5 +81,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/account_circle_48px" />
+        app:srcCompat="@drawable/ic_korekushon_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
