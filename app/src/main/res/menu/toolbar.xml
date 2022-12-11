@@ -7,15 +7,12 @@
         android:title="Switch"
         app:actionLayout="@layout/switch_item"
         app:showAsAction="always" />
-    
+
     <item
         android:id="@+id/action_search"
-        android:title="Search"
-        android:icon="@drawable/search_24px"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:contentDescription="@string/title_browse"
-        app:showAsAction="ifRoom|collapseActionView"
-        />
-
-
+        android:icon="@drawable/search_24px"
+        android:title="Search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
 </menu>

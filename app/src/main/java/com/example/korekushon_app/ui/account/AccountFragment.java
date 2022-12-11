@@ -13,10 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+
 import com.example.korekushon_app.DatabaseHelper;
 import com.example.korekushon_app.R;
 
@@ -67,7 +69,7 @@ public class AccountFragment extends Fragment {
                         prefs.edit().putString("CurrentUser", null).commit();
                         prefs.edit().putBoolean("Islogin", false).commit();
 
-                        Intent intent=new Intent(getActivity(), User_Login.class);
+                        Intent intent = new Intent(getActivity(), User_Login.class);
                         startActivity(intent);
                         getActivity().finish();
                         break;

@@ -49,7 +49,6 @@ public class SavedFragment extends Fragment {
         listItem = new ArrayList<>();
         listItem1 = new ArrayList<>();
 
-
         db = new DatabaseHelper(getActivity());
 
         listView = (ListView) rootView.findViewById(R.id.bookmark_listView);

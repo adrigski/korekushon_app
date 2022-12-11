@@ -3,7 +3,6 @@ package com.example.korekushon_app.ui.account;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,13 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.korekushon_app.DatabaseHelper;
 import com.example.korekushon_app.R;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.math.BigInteger;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 public class AccountSetup extends AppCompatActivity {
 
     DatabaseHelper db;
@@ -79,6 +71,4 @@ public class AccountSetup extends AppCompatActivity {
         }
         );
     }
-
-
 }

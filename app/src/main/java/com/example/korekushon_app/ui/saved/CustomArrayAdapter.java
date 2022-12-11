@@ -27,7 +27,9 @@ public class CustomArrayAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {return title.size();}
+    public int getCount() {
+        return title.size();
+    }
 
     @Override
     public Object getItem(int position) {
@@ -40,7 +42,7 @@ public class CustomArrayAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position,View view,ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
 
         view = inflater.inflate(R.layout.saved_listview, null);
         TextView textView = (TextView) view.findViewById(R.id.product_name);

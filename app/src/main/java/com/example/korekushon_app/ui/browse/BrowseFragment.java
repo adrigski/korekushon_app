@@ -3,7 +3,9 @@ package com.example.korekushon_app.ui.browse;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.preference.PreferenceManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +59,8 @@ public class BrowseFragment extends Fragment {
         toolbar = rootView.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         View rootView2 = inflater.inflate(R.layout.switch_item, container, false);
         Switch simpleSwitch = (Switch) rootView2.findViewById(R.id.simpleSwitch);
@@ -96,14 +102,15 @@ public class BrowseFragment extends Fragment {
                 SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
                 searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                     @Override
                     public boolean onQueryTextSubmit(String textQuery) {
                         if(switchState == false) {
                             Toast.makeText(getContext(), "False", Toast.LENGTH_SHORT).show();
-                            getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", textQuery));
+
+                                getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), textQuery));
+
                         }
                         else if(switchState == true)    {
                             Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
@@ -135,10 +142,14 @@ public class BrowseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+
 
         // Calling API to retrieve JSON format
-        getJSON(String.format("https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=%s", "nintendo switch"));
-        getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", "albedo"));
+        getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
+        getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", prefs.getString("Default_TOM_Term", "")));
+
 
     }
 

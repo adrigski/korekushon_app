@@ -3,18 +3,23 @@
 
 
     <EditTextPreference
+        android:defaultValue="c0b53bce27c1bdab90b1605249e600dc43dfd1d5"
         android:key="PC_API_Key"
-        android:title="Price Charting API Key"
         android:summary="API Auth Key for pricecharting.com"
-        android:text="c0b53bce27c1bdab90b1605249e600dc43dfd1d5" />
+        android:text="c0b53bce27c1bdab90b1605249e600dc43dfd1d5"
+        android:title="Price Charting API Key" />
 
+    <EditTextPreference
+        android:defaultValue="playstation 2"
+        android:key="Default_PC_Term"
+        android:summary="Search Term for Browse Page"
+        android:text="playstation 2"
+        android:title="Default Price Charting Search" />
 
-
-
-
-
-
-
-
-
+    <EditTextPreference
+        android:defaultValue="albedo"
+        android:key="Default_TOM_Term"
+        android:summary="Search Term for Browse Page"
+        android:text="albedo"
+        android:title="Default Price TOM" />
 </PreferenceScreen>

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:gravity="end"
-            app:title="More" />
+            app:title="@string/title_more" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

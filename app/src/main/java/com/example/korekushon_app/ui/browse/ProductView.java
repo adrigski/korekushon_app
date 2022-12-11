@@ -81,6 +81,8 @@ public class ProductView extends AppCompatActivity {
             }
         });
 
+
+
         // Load webpage inside webview
         if(listviewSecondary.contains("shop"))  {
             webView.loadUrl(String.format("https://otakumode.com" +
