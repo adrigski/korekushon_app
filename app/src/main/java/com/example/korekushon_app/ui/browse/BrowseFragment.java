@@ -84,6 +84,8 @@ public class BrowseFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
         // Top Bar Search
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override

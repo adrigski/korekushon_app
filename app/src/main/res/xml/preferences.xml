@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditTextPreference
+        android:key="PC_API_Key"
+        android:title="Price Charting API Key"
+        android:summary="API Auth Key for pricecharting.com"
+        android:text="c0b53bce27c1bdab90b1605249e600dc43dfd1d5" />
+
+    <SwitchPreference
+        android:key="DarkModeEnable"
+        android:title="Dark Mode"
+        />
+
+
+
+
+
+
+
+
+</PreferenceScreen>

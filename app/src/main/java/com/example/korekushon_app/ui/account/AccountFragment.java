@@ -5,40 +5,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.example.korekushon_app.DatabaseHelper;
-import com.example.korekushon_app.MainActivity;
 import com.example.korekushon_app.R;
-import com.example.korekushon_app.databinding.FragmentAccountBinding;
-import com.example.korekushon_app.ui.browse.ProductView;
-
-import org.w3c.dom.Text;
 
 public class AccountFragment extends Fragment {
 
-    private Button button;
     private TextView username_text;
     private TextView email_text;
-    private TextView username_text2;
+    private TextView passhash_text;
     DatabaseHelper db;
-    Toolbar toolbar;
-
+    Toolbar accountToolbar;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,35 +37,42 @@ public class AccountFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 
-        button = rootView.findViewById(R.id.button_click);
-        username_text = rootView.findViewById(R.id.usernameOutput);
-        username_text2 = rootView.findViewById(R.id.username_textview);
-        email_text = rootView.findViewById(R.id.email_output);
+        accountToolbar = rootView.findViewById(R.id.account_toolbar);
 
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(accountToolbar);
+
+        username_text = rootView.findViewById(R.id.usernameOutput);
+        email_text = rootView.findViewById(R.id.email_output);
+        passhash_text = rootView.findViewById(R.id.password_input);
 
         Cursor res = db.grabUser(prefs.getString("CurrentUser", "NULL"));
+        res.moveToFirst();
 
-        StringBuffer buffer = new StringBuffer();
-        while (res.moveToNext()) {
-            buffer.append(res.getString(2));
-        }
-
-        Log.i("Data", buffer.toString());
         username_text.setText(prefs.getString("CurrentUser", "NULL"));
-        username_text2.setText(prefs.getString("CurrentUser", "NULL"));
-        email_text.setText(buffer.toString());
+        email_text.setText(res.getString(2));
+        passhash_text.setText(res.getString(3));
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        requireActivity().addMenuProvider(new MenuProvider() {
 
-                prefs.edit().putString("CurrentUser", null).commit();
-                prefs.edit().putBoolean("Islogin", false).commit();
+            @Override
+            public void onCreateMenu(Menu menu, MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.account_menu, menu);
+            }
 
+            @Override
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.logout_button:
+                        prefs.edit().putString("CurrentUser", null).commit();
+                        prefs.edit().putBoolean("Islogin", false).commit();
 
-                Intent intent=new Intent(getActivity(), User_Login.class);
-                startActivity(intent);
-                getActivity().finish();
-
+                        Intent intent=new Intent(getActivity(), User_Login.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                        break;
+                }
+                return true;
             }
         });
         return rootView;
