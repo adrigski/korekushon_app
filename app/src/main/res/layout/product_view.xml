@@ -16,7 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/arrow_back_24px"
+            android:gravity="end"
             app:title="Placeholder"
+            app:menu="@menu/back_menu" />
+
+        <Button
+            android:id="@+id/addBookmark"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:text="Save Item"
             app:menu="@menu/back_menu" />
 
     </com.google.android.material.appbar.AppBarLayout>

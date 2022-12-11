@@ -146,8 +146,6 @@ public class BrowseFragment extends Fragment {
         JSONObject resultObject;
         JSONArray jsonArray;
 
-        String type = "";
-
 
             resultObject = new JSONObject(json);
             System.out.println("Preparsed JSON object " +
@@ -155,7 +153,6 @@ public class BrowseFragment extends Fragment {
             // set up json Array to be parsed
             jsonArray = resultObject.optJSONArray("products");
 
-        System.out.println("Makima is listening" + jsonArray);
         if (switchState == false ) {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonChildNode = null;
