@@ -26,7 +26,7 @@ public class AccountFragment extends Fragment {
     private TextView email_text;
     private TextView passhash_text;
     DatabaseHelper db;
-    Toolbar accountToolbar;
+    Toolbar actToolBar;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,10 +37,10 @@ public class AccountFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 
-        accountToolbar = rootView.findViewById(R.id.account_toolbar);
+        actToolBar = rootView.findViewById(R.id.account_toolbar);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(accountToolbar);
+        activity.setSupportActionBar(actToolBar);
 
         username_text = rootView.findViewById(R.id.usernameOutput);
         email_text = rootView.findViewById(R.id.email_output);

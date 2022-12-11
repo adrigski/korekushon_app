@@ -62,7 +62,7 @@ public class AccountSetup extends AppCompatActivity {
                 if (!buffer.toString().equals(usernameInput.getText().toString()) && !usernameInput.getText().toString().matches("")) {
                     Log.i("Login", "Account does not exist, creating...");
                     Log.i("Login", password_hash);
-                    boolean isInserted = db.insertData(usernameInput.getText().toString(),emailInput.getText().toString(),password_hash);
+                    boolean isInserted = db.insertUserAccount(usernameInput.getText().toString(),emailInput.getText().toString(),password_hash);
 
                     if (isInserted == true) {
                         Toast.makeText(AccountSetup.this, "Account Created!", Toast.LENGTH_LONG).show();

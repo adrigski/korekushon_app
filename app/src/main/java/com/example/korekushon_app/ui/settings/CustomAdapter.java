@@ -30,7 +30,8 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {return listOptions.length;}
+    public int getCount() {return listOptions.length;
+    }
 
     @Override
     public Object getItem(int position) {

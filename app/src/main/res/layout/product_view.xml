@@ -5,27 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/product_topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/product_appbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/arrow_back_24px"
             android:gravity="end"
-            app:title="Placeholder"
-            app:menu="@menu/back_menu" />
-
-        <Button
-            android:id="@+id/addBookmark"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:text="Save Item"
-            app:menu="@menu/back_menu" />
+            app:navigationIcon="@drawable/arrow_back_24px"
+            app:title="Placeholder" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -34,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintTop_toBottomOf="@+id/product_topBar"
         app:layout_constraintVertical_bias="0.223"
         tools:layout_editor_absoluteX="0dp" />
 
