@@ -187,7 +187,7 @@ public class BrowseFragment extends Fragment {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
-                String imgURL = "https://resize.cdn.otakumode.com/ex/250.250";
+                String imgURL = "https://resize.cdn.otakumode.com/ex/300.300";
                 //get all data from stream
 
                 JSONObject volumeInfo = jsonChildNode.getJSONObject("main_image");
