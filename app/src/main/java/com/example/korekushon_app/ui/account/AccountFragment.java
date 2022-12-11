@@ -59,6 +59,7 @@ public class AccountFragment extends Fragment {
 
             @Override
             public void onCreateMenu(Menu menu, MenuInflater menuInflater) {
+                menu.clear();
                 menuInflater.inflate(R.menu.account_menu, menu);
             }
 

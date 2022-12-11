@@ -38,7 +38,8 @@ public class ItemObject {
         connection.connect();
         InputStream input = connection.getInputStream();
         Bitmap myBitmap = BitmapFactory.decodeStream(input);
-        return myBitmap;  }
+        return myBitmap;
+    }
 
     public void setProduct_id(String product_id) {
         this.product_id = product_id;

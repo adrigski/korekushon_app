@@ -3,6 +3,7 @@ package com.example.korekushon_app.ui.saved;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,7 @@ public class SavedFragment extends Fragment {
     DatabaseHelper db;
     ArrayList<String> listItem;
     ArrayList<String> listItem1;
-    ArrayAdapter adapter;
-    CustomArrayAdapter adapter2;
+    CustomArrayAdapter adapter;
 
 
     public View onCreateView(LayoutInflater inflater,
@@ -52,8 +52,8 @@ public class SavedFragment extends Fragment {
                 listItem1.add(res.getString(2));
             }
 
-            adapter2 = new CustomArrayAdapter(getActivity().getApplicationContext(), listItem, listItem1);
-            listView.setAdapter(adapter2);
+            adapter = new CustomArrayAdapter(getActivity().getApplicationContext(), listItem, listItem1);
+            listView.setAdapter(adapter);
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

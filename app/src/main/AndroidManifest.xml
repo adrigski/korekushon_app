@@ -41,7 +41,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.settings.SettingsActivity"
+        <activity android:name=".ui.settings.Preferences"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light">
             <intent-filter>

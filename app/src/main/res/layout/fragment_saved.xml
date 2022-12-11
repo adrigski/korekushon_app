@@ -27,11 +27,9 @@
         android:id="@+id/bookmark_listView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/savedToolbar_Top">
-
-
-
-    </ListView>
+        app:layout_constraintTop_toBottomOf="@+id/savedToolbar_Top"
+        android:paddingBottom="150dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

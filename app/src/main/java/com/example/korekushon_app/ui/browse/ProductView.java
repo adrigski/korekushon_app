@@ -1,8 +1,9 @@
 package com.example.korekushon_app.ui.browse;
+
 import android.database.Cursor;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.Toast;;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuProvider;
+
 import com.example.korekushon_app.DatabaseHelper;
 import com.example.korekushon_app.R;
 
@@ -49,7 +51,6 @@ public class ProductView extends AppCompatActivity {
 
         toolbar.setTitle(listviewTitle);
 
-
         // Back Button
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +60,6 @@ public class ProductView extends AppCompatActivity {
         });
 
         addMenuProvider(new MenuProvider() {
-
             @Override
             public void onCreateMenu(Menu menu, MenuInflater menuInflater) {
                 menuInflater.inflate(R.menu.back_menu, menu);
@@ -69,30 +69,39 @@ public class ProductView extends AppCompatActivity {
             public boolean onMenuItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.bookmark:
+
+                        Cursor res = db.grabProduct(listviewTitle);
+
+                        StringBuffer buffer = new StringBuffer();
+                        while (res.moveToNext()) {
+                            buffer.append(res.getString(1));
+                        }
+
+                        if (!listviewTitle.equals(buffer.toString())) {
                             boolean isInserted = db.insertBookmarkData(listviewTitle, listviewSecondary);
 
                             if (isInserted == true) {
                                 Toast.makeText(getApplicationContext(), "Added to Saved Items", Toast.LENGTH_SHORT).show();
                             } else
                                 Toast.makeText(getApplicationContext(), "Failed to Add Item", Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(getApplicationContext(), "Item has already been added", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;
             }
         });
 
-
-
         // Load webpage inside webview
-        if(listviewSecondary.contains("shop"))  {
+        if (listviewSecondary.contains("shop")) {
             webView.loadUrl(String.format("https://otakumode.com" +
                     listviewSecondary));
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        else    {
+        } else {
             webView.loadUrl(String.format("https://www.pricecharting.com/game/%s/%s",
                     listviewSecondary.toLowerCase().replace(" ", "-"),
-                    listviewTitle.toLowerCase().replace(" ", "-").replace(".", "")));        }
+                    listviewTitle.toLowerCase().replace(" ", "-").replace(".", "")));
+        }
     }
 }

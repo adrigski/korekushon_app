@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.korekushon_app.R;
 
 import androidx.annotation.NonNull;
@@ -20,9 +21,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+
 import android.os.AsyncTask;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -35,14 +36,13 @@ import androidx.preference.PreferenceManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 
 public class BrowseFragment extends Fragment {
 
@@ -67,7 +67,6 @@ public class BrowseFragment extends Fragment {
 
         getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
 
-
         // Select object from listview
         browse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -76,7 +75,7 @@ public class BrowseFragment extends Fragment {
                 TextView listviewTitle = (TextView) view.findViewById(R.id.product_name);
                 TextView listviewSecondary = (TextView) view.findViewById(R.id.console_name);
 
-                Intent intent=new Intent(getActivity(), ProductView.class);
+                Intent intent = new Intent(getActivity(), ProductView.class);
                 intent.putExtra("listviewTitle", listviewTitle.getText().toString());
                 intent.putExtra("listviewSecondary", listviewSecondary.getText().toString());
                 startActivity(intent);
@@ -98,17 +97,15 @@ public class BrowseFragment extends Fragment {
 
                     @Override
                     public boolean onQueryTextSubmit(String textQuery) {
-                        if(!simpleSwitch.isChecked()) {
+                        if (!simpleSwitch.isChecked()) {
                             Toast.makeText(getContext(), "Video Games", Toast.LENGTH_SHORT).show();
-                                getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), textQuery));
+                            getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), textQuery));
 
-                        }
-                        else if(simpleSwitch.isChecked())    {
+                        } else if (simpleSwitch.isChecked()) {
                             Toast.makeText(getContext(), "Figures", Toast.LENGTH_SHORT).show();
                             simpleSwitch.setText("Figures");
                             getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", textQuery));
                         }
-
                         return false;
                     }
 
@@ -117,17 +114,14 @@ public class BrowseFragment extends Fragment {
                         return false;
                     }
                 });
-
-
-
             }
+
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 return false;
             }
         });
         return rootView;
-
     }
 
     @Override
@@ -137,44 +131,37 @@ public class BrowseFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
 
-
         simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(!isChecked) {
+                if (!isChecked) {
                     Toast.makeText(getContext(), "Video Games", Toast.LENGTH_SHORT).show();
                     switchState = false;
                     getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
 
-                }
-                else if(isChecked) {
+                } else if (isChecked) {
                     Toast.makeText(getContext(), "Figures", Toast.LENGTH_SHORT).show();
                     switchState = true;
                     getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", prefs.getString("Default_TOM_Term", "")));
                 }
             }
         });
-
-        // Calling API to retrieve JSON format
-
-
     }
 
     private void loadIntoListView(String json) throws JSONException {
-
         List<ItemObject> jsonObject = new ArrayList<ItemObject>();
         JSONObject resultObject;
         JSONArray jsonArray;
 
 
-            resultObject = new JSONObject(json);
-            System.out.println("Preparsed JSON object " +
-                    resultObject.toString());
-            // set up json Array to be parsed
-            jsonArray = resultObject.optJSONArray("products");
+        resultObject = new JSONObject(json);
+        System.out.println("Preparsed JSON object " +
+                resultObject.toString());
+        // set up json Array to be parsed
+        jsonArray = resultObject.optJSONArray("products");
 
-        if (!simpleSwitch.isChecked() ) {
-            for(int i = 0; i < jsonArray.length(); i++){
+        if (!simpleSwitch.isChecked()) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
                 //get all data from stream
@@ -189,9 +176,8 @@ public class BrowseFragment extends Fragment {
                 browse.setAdapter(jsonCustomAdapter);
             }
 
-        }
-        else if (simpleSwitch.isChecked()) {
-            for(int i = 0; i < jsonArray.length(); i++){
+        } else if (simpleSwitch.isChecked()) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
                 String imgURL = "https://resize.cdn.otakumode.com/ex/300.300";
@@ -200,7 +186,7 @@ public class BrowseFragment extends Fragment {
                 JSONObject volumeInfo = jsonChildNode.getJSONObject("main_image");
                 String fullURL = volumeInfo.getString("source");
                 String productID = imgURL + fullURL;
-                
+
                 String consoleName = jsonChildNode.getString("url");
                 String productName = jsonChildNode.getString("title");
 
@@ -216,7 +202,6 @@ public class BrowseFragment extends Fragment {
     }
 
     private void getJSON(final String urlWebService) {
-
         class GetJSON extends AsyncTask<Void, Void, String> {
 
             @Override
@@ -234,6 +219,7 @@ public class BrowseFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+
             @Override
             protected String doInBackground(Void... voids) {
 
@@ -253,7 +239,6 @@ public class BrowseFragment extends Fragment {
                 } catch (Exception e) {
                     return null;
                 }
-
             }
         }
 
