@@ -8,10 +8,7 @@
         android:summary="API Auth Key for pricecharting.com"
         android:text="c0b53bce27c1bdab90b1605249e600dc43dfd1d5" />
 
-    <SwitchPreference
-        android:key="DarkModeEnable"
-        android:title="Dark Mode"
-        />
+
 
 
 

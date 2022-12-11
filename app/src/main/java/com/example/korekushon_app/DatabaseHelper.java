@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.SimpleCursorAdapter;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -19,10 +20,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Korekushon.db";
     public static final String TABLE_NAME = "USER_ACCOUNT_TABLE";
     public static final String TABLE_NAME1 = "USER_COLLECTION_TABLE";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "USERNAME";
-    public static final String COL_3 = "EMAIL";
-    public static final String COL_4 = "PASSWORD";
+    public static final String COL_U_1 = "ID";
+    public static final String COL_U_2 = "USERNAME";
+    public static final String COL_U_3 = "EMAIL";
+    public static final String COL_U_4 = "PASSWORD";
+    public static final String COL_B_2 = "PRODUCT_NAME";
+    public static final String COL_B_3 = "PRODUCT_SUB_INFO";
 
     public DatabaseHelper(Context context) {super(context, DATABASE_NAME, null, 1);}
 
@@ -31,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // CREATES USER BOOKMARK TABLE
         String CREATE_USER_COLLECTION_TABLE = "create table " + TABLE_NAME1
-                + " (COLLECTION_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " (COLLECTION_ID INTEGER PRIMARY KEY,"
                 + " PRODUCT_NAME TEXT,"
                 + " PRODUCT_SUB_INFO TEXT)";
 
@@ -44,8 +47,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " USERNAME TEXT,"
                 + " EMAIL TEXT,"
                 + " PASSWORD TEXT,"
-                + " COLLECTION INTEGER,"
-                + " FOREIGN KEY(COLLECTION) REFERENCES USER_COLLECTION_TABLE(COLLECTION_ID))";
+                + " COLLECTION_ID INTEGER,"
+                + " FOREIGN KEY(COLLECTION_ID) REFERENCES USER_COLLECTION_TABLE(COLLECTION_ID))";
 
         db.execSQL(CREATE_USER_COLLECTION_TABLE);
         db.execSQL(CREATE_ACCOUNT_TABLE);
@@ -61,13 +64,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String USERNAME, String EMAIL, String PASSWORD) {
+    public boolean insertUserAccount(String USERNAME, String EMAIL, String PASSWORD) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, USERNAME);
-        contentValues.put(COL_3, EMAIL);
-        contentValues.put(COL_4, PASSWORD);
+        contentValues.put(COL_U_2, USERNAME);
+        contentValues.put(COL_U_3, EMAIL);
+        contentValues.put(COL_U_4, PASSWORD);
         long result = db.insert(TABLE_NAME, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean insertBookmarkData(String PRODUCT_NAME, String PRODUCT_SUB_INFO) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_B_2, PRODUCT_NAME);
+        contentValues.put(COL_B_3, PRODUCT_SUB_INFO);
+        long result = db.insert(TABLE_NAME1, null, contentValues);
         if (result == -1)
             return false;
         else
@@ -78,6 +93,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
+        return res;
+    }
+
+    public Cursor populateCollection() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME1, null);
+
+        return res;
+    }
+
+    public Cursor grabProduct(String productName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME1 + " where PRODUCT_NAME=? ",new String[]{productName});
+
         return res;
     }
 

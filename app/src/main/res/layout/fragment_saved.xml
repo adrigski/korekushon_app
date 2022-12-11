@@ -8,32 +8,30 @@
     tools:context=".ui.saved.SavedFragment" >
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/savedToolbar_Top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:fitsSystemWindows="true">
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:title="Saved"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/back_menu"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            app:title="Saved"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/text_saved"
-        android:layout_width="match_parent"
+
+    <ListView
+        android:id="@+id/bookmark_listView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/savedToolbar_Top">
+
+
+
+    </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

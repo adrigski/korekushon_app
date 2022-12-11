@@ -1,4 +1,5 @@
 package com.example.korekushon_app.ui.browse;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,8 @@ public class CustomAdapter extends BaseAdapter {
     private LayoutInflater lInflater;
     private List<ItemObject> listStorage;
 
-    public CustomAdapter(Context context,
-                         List<ItemObject> customizedListView) {
-        lInflater = (LayoutInflater)context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+    public CustomAdapter(Context context, List<ItemObject> customizedListView) {
+        lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         listStorage = customizedListView;
     }
 
