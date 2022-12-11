@@ -1,11 +1,13 @@
 package com.example.korekushon_app.ui.browse;
-import android.content.Intent;
 import android.database.Cursor;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;;
@@ -38,16 +40,15 @@ public class ProductView extends AppCompatActivity {
         consoleName = findViewById(R.id.console_name);
         webView = (WebView) findViewById(R.id.webview);
 
-
         Intent i = getIntent();
         String listviewTitle = i.getStringExtra("listviewTitle");
         String listviewSecondary = i.getStringExtra("listviewSecondary");
-
 
         System.out.println("Makima Is Listening" + productName + "" + consoleName + webView);
         System.out.println("Makima Is Listening" + listviewTitle + "" + listviewSecondary);
 
         toolbar.setTitle(listviewTitle);
+
 
         // Back Button
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -81,8 +82,15 @@ public class ProductView extends AppCompatActivity {
         });
 
         // Load webpage inside webview
-        webView.loadUrl(String.format("https://www.pricecharting.com/game/%s/%s",
-                listviewSecondary.toLowerCase().replace(" ", "-"),
-                listviewTitle.toLowerCase().replace(" ", "-").replace(".", "")));
+        if(listviewSecondary.contains("shop"))  {
+            webView.loadUrl(String.format("https://otakumode.com" +
+                    listviewSecondary));
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        else    {
+            webView.loadUrl(String.format("https://www.pricecharting.com/game/%s/%s",
+                    listviewSecondary.toLowerCase().replace(" ", "-"),
+                    listviewTitle.toLowerCase().replace(" ", "-").replace(".", "")));        }
     }
 }
