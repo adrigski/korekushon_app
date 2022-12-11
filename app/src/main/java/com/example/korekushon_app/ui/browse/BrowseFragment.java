@@ -175,7 +175,7 @@ public class BrowseFragment extends Fragment {
                 String productID = jsonChildNode.getString("id");
                 String productName = jsonChildNode.getString("product-name");
 
-                jsonObject.add(new ItemObject(consoleName, productName));
+                jsonObject.add(new ItemObject(consoleName, productName, productID));
 
                 List<ItemObject> parsedObject = jsonObject;
                 CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);
@@ -187,7 +187,7 @@ public class BrowseFragment extends Fragment {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
-                String imgURL = "https://resize.cdn.otakumode.com/ex/700.933";
+                String imgURL = "https://resize.cdn.otakumode.com/ex/300.300";
                 //get all data from stream
 
                 JSONObject volumeInfo = jsonChildNode.getJSONObject("main_image");
@@ -197,7 +197,7 @@ public class BrowseFragment extends Fragment {
                 String consoleName = jsonChildNode.getString("url");
                 String productName = jsonChildNode.getString("title");
 
-                jsonObject.add(new ItemObject(consoleName, productName));
+                jsonObject.add(new ItemObject(consoleName, productName, productID));
 
                 List<ItemObject> parsedObject = jsonObject;
                 CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);

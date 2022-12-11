@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.korekushon_app.R;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -40,7 +42,6 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView console_name = null;
-        TextView product_id = null;
         TextView product_name = null;
 
         if (convertView == null) {
@@ -49,6 +50,12 @@ public class CustomAdapter extends BaseAdapter {
         }
         console_name = convertView.findViewById(R.id.console_name);
         product_name = convertView.findViewById(R.id.product_name);
+        ImageView product_id = convertView.findViewById(R.id.imageView);
+        try {
+            product_id.setImageBitmap(listStorage.get(position).getProduct_id());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         console_name.setText(listStorage.get(position).getConsole_name());
         product_name.setText(listStorage.get(position).getProduct_name());
 
