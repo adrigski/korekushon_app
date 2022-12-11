@@ -1,7 +1,5 @@
 package com.example.korekushon_app.ui.saved;
 
-import static android.content.Intent.getIntent;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,23 +9,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.korekushon_app.DatabaseHelper;
 import com.example.korekushon_app.R;
-import com.example.korekushon_app.databinding.FragmentSavedBinding;
 import com.example.korekushon_app.ui.browse.ProductView;
-import com.example.korekushon_app.ui.settings.CustomAdapter;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class SavedFragment extends Fragment {
@@ -40,9 +30,8 @@ public class SavedFragment extends Fragment {
     CustomArrayAdapter adapter2;
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
 
         View rootView = inflater.inflate(R.layout.fragment_saved, container, false);
 
@@ -65,8 +54,6 @@ public class SavedFragment extends Fragment {
 
             adapter2 = new CustomArrayAdapter(getActivity().getApplicationContext(), listItem, listItem1);
             listView.setAdapter(adapter2);
-
-
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +70,6 @@ public class SavedFragment extends Fragment {
             }
         });
 
-
         return rootView;
     }
 
@@ -92,4 +78,3 @@ public class SavedFragment extends Fragment {
         super.onDestroyView();
     }
 }
-

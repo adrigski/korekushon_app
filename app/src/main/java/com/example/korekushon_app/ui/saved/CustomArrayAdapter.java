@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.korekushon_app.R;
@@ -50,7 +49,6 @@ public class CustomArrayAdapter extends BaseAdapter {
 
         textView.setText(title.get(position));
         textView1.setText(subtitle.get(position));
-
 
         return view;
     }

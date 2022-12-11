@@ -4,21 +4,21 @@
     <item
         android:id="@+id/navigation_browse"
         android:icon="@drawable/explore_24px"
-        android:title="Browse"/>
+        android:title="Browse" />
 
     <item
         android:id="@+id/navigation_saved"
         android:icon="@drawable/collections_bookmark_24px"
-        android:title="Saved"/>
+        android:title="Saved" />
 
     <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/person_24px"
-        android:title="Account"/>
+        android:title="Account" />
 
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/settings_24px"
-        android:title="More"/>
+        android:title="More" />
 
 </menu>

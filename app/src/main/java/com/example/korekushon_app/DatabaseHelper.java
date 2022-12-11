@@ -6,15 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.SimpleCursorAdapter;
-
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Korekushon.db";
@@ -27,7 +22,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_B_2 = "PRODUCT_NAME";
     public static final String COL_B_3 = "PRODUCT_SUB_INFO";
 
-    public DatabaseHelper(Context context) {super(context, DATABASE_NAME, null, 1);}
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, 1);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -89,7 +86,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
@@ -99,14 +95,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor populateCollection() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_NAME1, null);
-
         return res;
     }
 
     public Cursor grabProduct(String productName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + TABLE_NAME1 + " where PRODUCT_NAME=? ",new String[]{productName});
-
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME1 + " where PRODUCT_NAME=? ", new String[]{productName});
         return res;
     }
 
@@ -117,7 +111,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor res = db.rawQuery("select * from " + TABLE_NAME + " where USERNAME=?", new String[]{username});
         Log.i("SQL", res.toString());
-
         return res;
     }
 
@@ -125,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
+            digest.update(s.getBytes(Charset.forName("US-ASCII")), 0, s.length());
             byte[] magnitude = digest.digest();
             BigInteger bi = new BigInteger(1, magnitude);
             String hash = String.format("%0" + (magnitude.length << 1) + "x", bi);
@@ -136,6 +129,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return "";
     }
-
-
 }

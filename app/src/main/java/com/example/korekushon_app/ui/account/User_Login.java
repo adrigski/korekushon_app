@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.korekushon_app.DatabaseHelper;
 import com.example.korekushon_app.MainActivity;
 import com.example.korekushon_app.R;
@@ -37,60 +39,59 @@ public class User_Login extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences("application", Context.MODE_PRIVATE);
 
         // checks if user is already logged in
-        if(prefs.getBoolean("Islogin", false)) {
-            Log.i("Login","User has previously logged in");
-            Intent intent=new Intent(User_Login.this, MainActivity.class);
+        if (prefs.getBoolean("Islogin", false)) {
+            Log.i("Login", "User has previously logged in");
+            Intent intent = new Intent(User_Login.this, MainActivity.class);
             startActivity(intent);
         }
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        loginButton.setOnClickListener
+                (new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
 
-                        passwordInput = findViewById(R.id.pass_input);
-                        nameInput = findViewById(R.id.username_input);
+                         passwordInput = findViewById(R.id.pass_input);
+                         nameInput = findViewById(R.id.username_input);
 
-                        Cursor res = db.grabUser(nameInput.getText().toString());
-                        res.moveToFirst();
+                         Cursor res = db.grabUser(nameInput.getText().toString());
+                         res.moveToFirst();
 
-                        // Grab Password Hash from Input
-                        String password_hash = db.md5(passwordInput.getText().toString());
+                         // Grab Password Hash from Input
+                         String password_hash = db.md5(passwordInput.getText().toString());
 
-                        Log.i("Login", "Password Input Hash" + password_hash);
-                        Log.i("Login", "Password Database Hash" + res.getString(3));
+                         Log.i("Login", "Password Input Hash" + password_hash);
+                         Log.i("Login", "Password Database Hash" + res.getString(3));
 
-                        if (res.getString(1).equals(nameInput.getText().toString()) && !nameInput.getText().toString().matches("")) {
+                         if (res.getString(1).equals(nameInput.getText().toString()) && !nameInput.getText().toString().matches("")) {
 
-                            if (password_hash.equals(res.getString(3))) {
-                                prefs.edit().putString("CurrentUser", res.getString(1)).commit();
-                                prefs.edit().putBoolean("Islogin", true).commit();
+                             if (password_hash.equals(res.getString(3))) {
+                                 prefs.edit().putString("CurrentUser", res.getString(1)).commit();
+                                 prefs.edit().putBoolean("Islogin", true).commit();
 
-                                String message = "Welcome back, " + res.getString(1) + "!";
+                                 String message = "Welcome back, " + res.getString(1) + "!";
 
-                                Toast.makeText(User_Login.this, message, Toast.LENGTH_SHORT).show();
+                                 Toast.makeText(User_Login.this, message, Toast.LENGTH_SHORT).show();
 
-                                Intent intent=new Intent(User_Login.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(User_Login.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        else {
-                            TextInputLayout til = (TextInputLayout) findViewById(R.id.InputUsername);
-                            til.setError("User does not exists");
-                        }
-                    }
-                }
-        );
+                                 Intent intent = new Intent(User_Login.this, MainActivity.class);
+                                 startActivity(intent);
+                                 finish();
+                             } else {
+                                 Toast.makeText(User_Login.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
+                             }
+                         } else {
+                             TextInputLayout til = (TextInputLayout) findViewById(R.id.InputUsername);
+                             til.setError("User does not exists");
+                         }
+                     }
+                 }
+                );
 
         // takes user to sign up screen
         createButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(User_Login.this, AccountSetup.class);
+                        Intent intent = new Intent(User_Login.this, AccountSetup.class);
                         startActivity(intent);
                     }
                 }

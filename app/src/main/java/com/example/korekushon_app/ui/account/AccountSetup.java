@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.korekushon_app.DatabaseHelper;
 import com.example.korekushon_app.R;
 import com.google.android.material.textfield.TextInputLayout;
+
 public class AccountSetup extends AppCompatActivity {
 
     DatabaseHelper db;
@@ -37,38 +38,38 @@ public class AccountSetup extends AppCompatActivity {
         passwordInput = findViewById(R.id.pass_input);
         submitButton = findViewById(R.id.signup_button);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        submitButton.setOnClickListener
+                (new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
 
-                Cursor res = db.grabUser(usernameInput.getText().toString());
+                         Cursor res = db.grabUser(usernameInput.getText().toString());
 
-                // Generate hash for password
-                String password_hash = db.md5(passwordInput.getText().toString());
+                         // Generate hash for password
+                         String password_hash = db.md5(passwordInput.getText().toString());
 
-                StringBuffer buffer = new StringBuffer();
-                while (res.moveToNext()) {
-                    buffer.append(res.getString(1));
-                }
+                         StringBuffer buffer = new StringBuffer();
+                         while (res.moveToNext()) {
+                             buffer.append(res.getString(1));
+                         }
 
-                if (!buffer.toString().equals(usernameInput.getText().toString()) && !usernameInput.getText().toString().matches("")) {
-                    Log.i("Login", "Account does not exist, creating...");
-                    Log.i("Login", password_hash);
-                    boolean isInserted = db.insertUserAccount(usernameInput.getText().toString(),emailInput.getText().toString(),password_hash);
+                         if (!buffer.toString().equals(usernameInput.getText().toString()) && !usernameInput.getText().toString().matches("")) {
+                             Log.i("Login", "Account does not exist, creating...");
+                             Log.i("Login", password_hash);
+                             boolean isInserted = db.insertUserAccount(usernameInput.getText().toString(), emailInput.getText().toString(), password_hash);
 
-                    if (isInserted == true) {
-                        Toast.makeText(AccountSetup.this, "Account Created!", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        Toast.makeText(AccountSetup.this, "Account Creation Failed", Toast.LENGTH_LONG).show();
-                    }
-                }
-                else {
-                    TextInputLayout til = (TextInputLayout) findViewById(R.id.unameInputLayout);
-                    til.setError("Username exists");
-                }
-            }
-        }
-        );
+                             if (isInserted == true) {
+                                 Toast.makeText(AccountSetup.this, "Account Created!", Toast.LENGTH_LONG).show();
+                                 finish();
+                             } else {
+                                 Toast.makeText(AccountSetup.this, "Account Creation Failed", Toast.LENGTH_LONG).show();
+                             }
+                         } else {
+                             TextInputLayout til = (TextInputLayout) findViewById(R.id.unameInputLayout);
+                             til.setError("Username exists");
+                         }
+                     }
+                 }
+                );
     }
 }
