@@ -187,9 +187,14 @@ public class BrowseFragment extends Fragment {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
+                String imgURL = "https://resize.cdn.otakumode.com/ex/700.933";
                 //get all data from stream
+
+                JSONObject volumeInfo = jsonChildNode.getJSONObject("main_image");
+                String fullURL = volumeInfo.getString("source");
+                String productID = imgURL + fullURL;
+                
                 String consoleName = jsonChildNode.getString("url");
-                String productID = jsonChildNode.getString("_id");
                 String productName = jsonChildNode.getString("title");
 
                 jsonObject.add(new ItemObject(consoleName, productName));
@@ -198,7 +203,7 @@ public class BrowseFragment extends Fragment {
                 CustomAdapter jsonCustomAdapter = new CustomAdapter(getActivity(), parsedObject);
                 browse.setAdapter(jsonCustomAdapter);
             }
-            }
+        }
 
 
     }
