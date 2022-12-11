@@ -1,5 +1,7 @@
 package com.example.korekushon_app.ui.browse;
 
+import static android.content.Intent.getIntent;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.korekushon_app.R;
+import com.example.korekushon_app.ui.saved.SavedFragment;
 
 public class ProductView extends AppCompatActivity {
 
