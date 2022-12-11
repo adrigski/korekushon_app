@@ -4,9 +4,9 @@
 
     <item
         android:id="@+id/bookmark"
+        android:contentDescription="Placeholder"
         android:icon="@drawable/bookmark_add_24px"
         android:title="Bookmark"
-        android:contentDescription="Placeholder"
         app:showAsAction="always" />
 
 </menu>

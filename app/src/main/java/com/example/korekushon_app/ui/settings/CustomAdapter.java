@@ -22,7 +22,7 @@ public class CustomAdapter extends BaseAdapter {
     int iconOptions[];
     LayoutInflater inflater;
 
-    public CustomAdapter(Context context, String [] listOptions, int[] iconOptions) {
+    public CustomAdapter(Context context, String[] listOptions, int[] iconOptions) {
         this.context = context;
         this.listOptions = listOptions;
         this.iconOptions = iconOptions;
@@ -30,7 +30,8 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {return listOptions.length;
+    public int getCount() {
+        return listOptions.length;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position,View view,ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
 
         view = inflater.inflate(R.layout.options_list, null);
         TextView textView = (TextView) view.findViewById(R.id.title);
