@@ -8,18 +8,34 @@
     tools:context="ui.browse.BrowseFragment" >
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:title="@string/title_browse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/toolbar"
+            app:title="@string/title_browse"
             tools:ignore="MissingConstraints" />
+
+        <Switch
+            android:id="@+id/simpleSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:checked="false"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:layout_gravity="center"
+            android:textOff="PriceCharting"
+            android:textOn="OtakuMode"
+            android:showText="true">
+
+        </Switch>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,7 +47,7 @@
         android:id="@+id/listView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

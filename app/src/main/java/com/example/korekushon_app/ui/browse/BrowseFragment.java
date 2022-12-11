@@ -49,7 +49,8 @@ public class BrowseFragment extends Fragment {
     public ListView browse;
     ArrayList<ItemObject> list_data;
     Toolbar toolbar;
-    Boolean switchState;
+    Boolean switchState = true;
+    Switch simpleSwitch;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,19 +62,10 @@ public class BrowseFragment extends Fragment {
         activity.setSupportActionBar(toolbar);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        simpleSwitch = (Switch) rootView.findViewById(R.id.simpleSwitch);
+        simpleSwitch.isChecked();
 
-        View rootView2 = inflater.inflate(R.layout.switch_item, container, false);
-        Switch simpleSwitch = (Switch) rootView2.findViewById(R.id.simpleSwitch);
-
-        switchState = simpleSwitch.isChecked();
-        if(switchState == false) {
-            Toast.makeText(getContext(), "False", Toast.LENGTH_SHORT).show();
-        }
-        else if(switchState == true) {
-            Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
-        }
-
-
+        getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
 
 
         // Select object from listview
@@ -106,14 +98,14 @@ public class BrowseFragment extends Fragment {
 
                     @Override
                     public boolean onQueryTextSubmit(String textQuery) {
-                        if(switchState == false) {
-                            Toast.makeText(getContext(), "False", Toast.LENGTH_SHORT).show();
-
+                        if(!simpleSwitch.isChecked()) {
+                            Toast.makeText(getContext(), "Video Games", Toast.LENGTH_SHORT).show();
                                 getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), textQuery));
 
                         }
-                        else if(switchState == true)    {
-                            Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
+                        else if(simpleSwitch.isChecked())    {
+                            Toast.makeText(getContext(), "Figures", Toast.LENGTH_SHORT).show();
+                            simpleSwitch.setText("Figures");
                             getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", textQuery));
                         }
 
@@ -143,12 +135,27 @@ public class BrowseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
 
 
+        simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked) {
+                    Toast.makeText(getContext(), "Video Games", Toast.LENGTH_SHORT).show();
+                    switchState = false;
+                    getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
+
+                }
+                else if(isChecked) {
+                    Toast.makeText(getContext(), "Figures", Toast.LENGTH_SHORT).show();
+                    switchState = true;
+                    getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", prefs.getString("Default_TOM_Term", "")));
+                }
+            }
+        });
 
         // Calling API to retrieve JSON format
-        getJSON(String.format("https://www.pricecharting.com/api/products?t=%s&q=%s", prefs.getString("PC_API_Key", "c0b53bce27c1bdab90b1605249e600dc43dfd1d5"), prefs.getString("Default_PC_Term", "")));
-        getJSON(String.format("https://otakumode.com/search/api/products?keyword=%s", prefs.getString("Default_TOM_Term", "")));
 
 
     }
@@ -166,7 +173,7 @@ public class BrowseFragment extends Fragment {
             // set up json Array to be parsed
             jsonArray = resultObject.optJSONArray("products");
 
-        if (switchState == false ) {
+        if (!simpleSwitch.isChecked() ) {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
@@ -183,7 +190,7 @@ public class BrowseFragment extends Fragment {
             }
 
         }
-        else if (switchState == true) {
+        else if (simpleSwitch.isChecked()) {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonChildNode = null;
                 jsonChildNode = jsonArray.getJSONObject(i);
