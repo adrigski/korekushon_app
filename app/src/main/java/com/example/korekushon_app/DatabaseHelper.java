@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " PRODUCT_SUB_INFO TEXT)";
 
         // CREATES GUEST ACCOUNT
-        String CREATE_GUEST_ACCOUNT = "insert into " + TABLE_NAME + " (USERNAME)" + "VALUES('GUEST')";
+        String CREATE_GUEST_ACCOUNT = "insert into " + TABLE_NAME + " (USERNAME, EMAIL, PASSWORD)" + "VALUES('Guest', 'guest@example.com', 'fac38cbc2e0af6719ea5c399e832739e')";
 
         // CREATES USER ACCOUNT TABLE
         String CREATE_ACCOUNT_TABLE = "create table " + TABLE_NAME
